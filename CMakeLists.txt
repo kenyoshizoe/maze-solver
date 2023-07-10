@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.23)
 project(maze_solver CXX)
 
-add_library(maze_solver
-    src/solver/breadth_first.cc
-)
+file(GLOB_RECURSE SRC ${CMAKE_CURRENT_SOURCE_DIR}/src *.cc)
+message("SRC:${SRC}")
+add_library(maze_solver ${SRC})
 target_include_directories(maze_solver
     PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 add_executable(maze_solver_test
@@ -14,9 +14,9 @@ add_executable(maze_solver_test
 )
 target_link_libraries(maze_solver_test
     PRIVATE
-        maze_solver
+    maze_solver
 )
 target_include_directories(maze_solver_test
     PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
