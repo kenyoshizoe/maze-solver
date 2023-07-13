@@ -1,8 +1,12 @@
 #include "maze-solver/geometry.h"
+
 #include <iostream>
 
 namespace maze_solver {
 Path::Path(Position point) : position_(point) {
+  // initialize visited
+  for (int y = 0; y < 16; y++)
+    for (int x = 0; x < 16; x++) visited_[y][x] = false;
   visited_[point.y][point.x] = true;
 }
 Path::Path(Position position, std::vector<Direction> directions,
@@ -32,6 +36,27 @@ Path Path::GetNextPath(Direction direction) const {
 std::vector<Path> Path::GetNextPaths(Maze maze) const {
   std::vector<Path> next_paths;
   for (auto direction : maze.GetAvailableDirection(position_)) {
+    Position next_position = position_;
+    switch (direction) {
+      case Direction::kEast:
+        next_position.x++;
+        break;
+      case Direction::kNorth:
+        next_position.y--;
+        break;
+      case Direction::kSouth:
+        next_position.y++;
+        break;
+      case Direction::kWest:
+        next_position.x--;
+        break;
+      default:
+        break;
+    }
+
+    if (visited_[next_position.y][next_position.x]) {
+      continue;
+    }
     next_paths.push_back(GetNextPath(direction));
   }
   return next_paths;

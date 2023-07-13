@@ -11,19 +11,13 @@ Path BreadthFirst::Solve(Maze maze) {
   std::queue<Path> open;
   Path start(maze.GetStart());
   open.push(start);
-
-  int count = 0;
-  int max_count = 1;
-
   while (true) {
     if (open.empty()) {
       return Path(maze.GetStart());
     }
-
     Path n = open.front();
     open.pop();
-    PrintMaze(maze, n);
-
+    // PrintMaze(maze, n);
     if (n.GetPosition().x == maze.GetGoal().x &&
         n.GetPosition().y == maze.GetGoal().y) {
       return n;

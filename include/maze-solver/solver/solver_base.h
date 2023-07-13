@@ -4,7 +4,7 @@
 #include <utility>
 #include <vector>
 
-#include "maze-solver/geometry/maze.h"
+#include "maze-solver/geometry.h"
 
 namespace maze_solver {
 class SolverBase {
@@ -13,9 +13,9 @@ class SolverBase {
    * @brief Solve the maze.
    *
    * @param maze
-   * @return std::vector<std::pair<int, int>> The path from start to goal.
+   * @return Path The path from start to goal.
    */
-  virtual std::vector<std::pair<int, int>> Solve(Maze maze) = 0;
+  virtual Path Solve(Maze maze) = 0;
 };
 }  // namespace maze_solver
 

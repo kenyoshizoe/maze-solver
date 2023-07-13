@@ -7,6 +7,7 @@
 
 namespace maze_solver {
 enum class Direction {
+  kNone = 0b0000,
   kSouth = 0b0001,
   kEast = 0b0010,
   kWest = 0b0100,
@@ -39,16 +40,22 @@ class Maze {
   Position GetGoal() const { return goal_; }
   std::vector<Direction> GetAvailableDirection(Position position) const {
     std::vector<Direction> available;
-    if (!(wall_[position.y][position.x] & 0b0001) && position.y > 0) {
+    if (!(wall_[position.y][position.x] &
+          static_cast<int>(Direction::kNorth)) &&
+        position.y > 0) {
       available.push_back(Direction::kNorth);
     }
-    if (!(wall_[position.y][position.x] & 0b0010) && position.x > 0) {
+    if (!(wall_[position.y][position.x] & static_cast<int>(Direction::kWest)) &&
+        position.x > 0) {
       available.push_back(Direction::kWest);
     }
-    if (!(wall_[position.y][position.x] & 0b0100) && position.x < 15) {
+    if (!(wall_[position.y][position.x] & static_cast<int>(Direction::kEast)) &&
+        position.x < 15) {
       available.push_back(Direction::kEast);
     }
-    if (!(wall_[position.y][position.x] & 0b1000) && position.y < 15) {
+    if (!(wall_[position.y][position.x] &
+          static_cast<int>(Direction::kSouth)) &&
+        position.y < 15) {
       available.push_back(Direction::kSouth);
     }
     return available;
