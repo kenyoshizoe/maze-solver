@@ -7,10 +7,10 @@
 
 namespace maze_solver {
 enum class Direction {
-  kWest = 0b0001,
-  kNorth = 0b0010,
-  kEast = 0b0100,
-  kSouth = 0b1000,
+  kSouth = 0b0001,
+  kEast = 0b0010,
+  kWest = 0b0100,
+  kNorth = 0b1000,
 };
 
 struct Position {
@@ -39,16 +39,16 @@ class Maze {
   Position GetGoal() const { return goal_; }
   std::vector<Direction> GetAvailableDirection(Position position) const {
     std::vector<Direction> available;
-    if (!(wall_[position.y][position.x] & 0b0001)) {
+    if (!(wall_[position.y][position.x] & 0b0001) && position.y > 0) {
       available.push_back(Direction::kNorth);
     }
-    if (!(wall_[position.y][position.x] & 0b0010)) {
+    if (!(wall_[position.y][position.x] & 0b0010) && position.x > 0) {
       available.push_back(Direction::kWest);
     }
-    if (!(wall_[position.y][position.x] & 0b0100)) {
+    if (!(wall_[position.y][position.x] & 0b0100) && position.x < 15) {
       available.push_back(Direction::kEast);
     }
-    if (!(wall_[position.y][position.x] & 0b1000)) {
+    if (!(wall_[position.y][position.x] & 0b1000) && position.y < 15) {
       available.push_back(Direction::kSouth);
     }
     return available;
@@ -85,9 +85,8 @@ class Path : public std::enable_shared_from_this<Path> {
   std::vector<Direction> GetDirections() const { return directions_; };
   std::array<std::array<bool, 16>, 16> GetVisited() const { return visited_; };
 
-  std::shared_ptr<Path> GetNextPath(Direction direction) const;
-  std::vector<std::shared_ptr<Path>> GetNextPaths(
-      const std::shared_ptr<Maze> maze) const;
+  Path GetNextPath(Direction direction) const;
+  std::vector<Path> GetNextPaths(Maze maze) const;
 
  private:
   Position position_;
