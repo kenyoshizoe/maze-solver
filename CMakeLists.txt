@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.23)
 project(maze_solver CXX)
 
-file(GLOB_RECURSE SRC ${CMAKE_CURRENT_SOURCE_DIR}/src *.cc)
+file(GLOB_RECURSE SRC ${CMAKE_CURRENT_SOURCE_DIR} src/*.cc)
 message("SRC:${SRC}")
 add_library(maze_solver ${SRC})
 target_include_directories(maze_solver
