@@ -3,20 +3,18 @@
 
 #include <memory>
 
+#include "maze-solver/geometry.h"
 #include "maze-solver/solver/solver_base.h"
+#include "maze-solver/visualizer/print.h"
 
 namespace maze_solver {
 class BreadthFirst : public SolverBase {
  public:
   BreadthFirst(/* args */) {}
   ~BreadthFirst() {}
-  std::vector<std::pair<int, int>> Solve(Maze maze) override;
+  Path Solve(Maze maze) override;
 
  private:
-  struct Node {
-    std::pair<int, int> position_;
-    std::shared_ptr<Node> parent_;
-  };
 };
 }  // namespace maze_solver
 #endif  // MAZE_SOLVER_SOLVER_BREADTH_FIRST_H_

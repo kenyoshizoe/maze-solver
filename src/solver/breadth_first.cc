@@ -4,41 +4,34 @@
 #include <iostream>
 #include <queue>
 
-namespace maze_solver {
-std::vector<std::pair<int, int>> BreadthFirst::Solve(Maze maze) {
-  std::queue<Node> open;
+#include <thread>
 
-  Node start = {maze.GetStart(), nullptr};
+namespace maze_solver {
+Path BreadthFirst::Solve(Maze maze) {
+  std::queue<Path> open;
+  Path start(maze.GetStart());
   open.push(start);
+
+  int count = 0;
+  int max_count = 1;
 
   while (true) {
     if (open.empty()) {
-      return std::vector<std::pair<int, int>>();
+      return Path(maze.GetStart());
     }
 
-    Node n = open.front();
+    Path n = open.front();
     open.pop();
+    PrintMaze(maze, n);
 
-    if (n.position_ == maze.GetGoal()) {
-      std::vector<std::pair<int, int>> path;
-      while (n.parent_ != nullptr) {
-        path.push_back(n.position_);
-        n = *n.parent_;
-      }
-      std::reverse(path.begin(), path.end());
-      return path;
+    if (n.GetPosition().x == maze.GetGoal().x &&
+        n.GetPosition().y == maze.GetGoal().y) {
+      return n;
     }
-
-    std::vector<std::pair<int, int>> available = maze.GetAvailable(n.position_);
-    for (auto a : available) {
-      Node next = {a, std::make_shared<Node>(n)};
-      open.push(next);
+    auto next_paths = n.GetNextPaths(maze);
+    for (int i = 0; i < next_paths.size(); i++) {
+      open.push(next_paths.at(i));
     }
-
-    std::cout << open.size() << std::endl;
   }
-
-  std::vector<std::pair<int, int>> path;
-  return path;
 }
 }  // namespace maze_solver
