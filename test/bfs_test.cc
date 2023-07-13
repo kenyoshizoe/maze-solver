@@ -1,7 +1,9 @@
+#include "maze-solver/solver/bfs.h"
+
 #include <array>
+#include <chrono>
 
 #include "maze-solver/geometry.h"
-#include "maze-solver/solver/breadth_first.h"
 #include "maze-solver/visualizer/print.h"
 
 int main() {
@@ -31,8 +33,16 @@ int main() {
     }
   }
   maze_solver::Maze maze(wall, {0, 0}, {8, 8});
-  maze_solver::BreadthFirst solver;
+  maze_solver::BFS solver;
+
+  auto start_time = std::chrono::system_clock::now();
   maze_solver::Path path = solver.Solve(maze);
+  std::cout << "processing time:"
+            << std::chrono::duration_cast<std::chrono::milliseconds>(
+                   std::chrono::system_clock::now() - start_time)
+                   .count()
+            << "[ms], cost:" << path.GetDirections().size() << std::endl;
+
   maze_solver::PrintMaze(maze, path);
   return 0;
 }

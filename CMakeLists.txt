@@ -9,14 +9,25 @@ target_include_directories(maze_solver
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-add_executable(breadth_first_test
-    test/breadth_first_test.cc
+add_executable(bfs_test
+    test/bfs_test.cc
 )
-target_link_libraries(breadth_first_test
+target_link_libraries(bfs_test
     PRIVATE
     maze_solver
 )
-target_include_directories(breadth_first_test
+target_include_directories(bfs_test
+    PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+add_executable(dfs_test
+    test/dfs_test.cc
+)
+target_link_libraries(dfs_test
+    PRIVATE
+    maze_solver
+)
+target_include_directories(dfs_test
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )

@@ -8,13 +8,11 @@
 #include "maze-solver/visualizer/print.h"
 
 namespace maze_solver {
-class BreadthFirst : public SolverBase {
+class BFS : public SolverBase {
  public:
-  BreadthFirst(/* args */) {}
-  ~BreadthFirst() {}
+  BFS(/* args */) {}
+  ~BFS() {}
   Path Solve(Maze maze) override;
-
- private:
 };
 }  // namespace maze_solver
 #endif  // MAZE_SOLVER_SOLVER_BREADTH_FIRST_H_

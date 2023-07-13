@@ -1,13 +1,9 @@
-#include "maze-solver/solver/breadth_first.h"
+#include "maze-solver/solver/bfs.h"
 
-#include <algorithm>
-#include <iostream>
 #include <queue>
 
-#include <thread>
-
 namespace maze_solver {
-Path BreadthFirst::Solve(Maze maze) {
+Path BFS::Solve(Maze maze) {
   std::queue<Path> open;
   Path start(maze.GetStart());
   open.push(start);
