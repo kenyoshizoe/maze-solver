@@ -51,13 +51,13 @@ void PrintMaze(Maze maze, Path path) {
       } else if (maze.GetStart().x == x && maze.GetStart().y == y) {
         str += "⭐";
       } else if (path_map[y][x] == Direction::kNorth) {
-        str += "👆";
+        str += "↑ ";
       } else if (path_map[y][x] == Direction::kEast) {
-        str += "👉";
+        str += "→ ";
       } else if (path_map[y][x] == Direction::kWest) {
-        str += "👈";
+        str += "← ";
       } else if (path_map[y][x] == Direction::kSouth) {
-        str += "👇";
+        str += "↓ ";
       } else {
         str += "  ";
       }
