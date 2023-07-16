@@ -52,12 +52,20 @@ void PrintMaze(Maze maze, Path path) {
         str += "⭐";
       } else if (path_map[y][x] == Direction::kNorth) {
         str += "↑ ";
+      } else if (path_map[y][x] == Direction::kNorthEast) {
+        str += "↗ ";
       } else if (path_map[y][x] == Direction::kEast) {
         str += "→ ";
-      } else if (path_map[y][x] == Direction::kWest) {
-        str += "← ";
+      } else if (path_map[y][x] == Direction::kSouthEast) {
+        str += "↘ ";
       } else if (path_map[y][x] == Direction::kSouth) {
         str += "↓ ";
+      } else if (path_map[y][x] == Direction::kSouthWest) {
+        str += "↙ ";
+      } else if (path_map[y][x] == Direction::kWest) {
+        str += "← ";
+      } else if (path_map[y][x] == Direction::kNorthWest) {
+        str += "↖ ";
       } else {
         str += "  ";
       }

@@ -8,10 +8,14 @@
 namespace maze_solver {
 enum class Direction {
   kNone = 0b0000,
-  kSouth = 0b0001,
-  kEast = 0b0010,
-  kWest = 0b0100,
   kNorth = 0b1000,
+  kNorthEast = 0b1010,
+  kEast = 0b0010,
+  kSouthEast = 0b0011,
+  kSouth = 0b0001,
+  kSouthWest = 0b0101,
+  kWest = 0b0100,
+  kNorthWest = 0b1100,
 };
 
 struct Position {
@@ -28,35 +32,35 @@ class Maze {
  public:
   Maze(std::array<std::array<int, 16>, 16> wall, Position start, Position goal)
       : wall_(wall), start_(start), goal_(goal){};
-  /**
-   * @brief 2次元配列で表現された迷路の壁の情報を返す。
-   * 1bit: South Wall
-   * 2bit: East Wall
-   * 3bit: West Wall
-   * 4bit: North Wall
-   */
   std::array<std::array<int, 16>, 16> GetWall() const { return wall_; }
   Position GetStart() const { return start_; }
   Position GetGoal() const { return goal_; }
   std::vector<Direction> GetAvailableDirection(Position position) const {
     std::vector<Direction> available;
-    if (!(wall_[position.y][position.x] &
-          static_cast<int>(Direction::kNorth)) &&
-        position.y > 0) {
-      available.push_back(Direction::kNorth);
-    }
-    if (!(wall_[position.y][position.x] & static_cast<int>(Direction::kWest)) &&
-        position.x > 0) {
-      available.push_back(Direction::kWest);
-    }
-    if (!(wall_[position.y][position.x] & static_cast<int>(Direction::kEast)) &&
-        position.x < 15) {
-      available.push_back(Direction::kEast);
-    }
-    if (!(wall_[position.y][position.x] &
-          static_cast<int>(Direction::kSouth)) &&
-        position.y < 15) {
-      available.push_back(Direction::kSouth);
+    for (auto direction :
+         {Direction::kNorth, Direction::kNorthEast, Direction::kEast,
+          Direction::kSouthEast, Direction::kSouth, Direction::kSouthWest,
+          Direction::kWest, Direction::kNorthWest}) {
+      // Wall Check
+      if (wall_[position.y][position.x] & static_cast<int>(direction)) continue;
+      // Boundary Check
+      if (static_cast<int>(direction) & static_cast<int>(Direction::kNorth) &&
+          position.y == 0) {
+        continue;
+      }
+      if (static_cast<int>(direction) & static_cast<int>(Direction::kEast) &&
+          position.x == 15) {
+        continue;
+      }
+      if (static_cast<int>(direction) & static_cast<int>(Direction::kSouth) &&
+          position.y == 15) {
+        continue;
+      }
+      if (static_cast<int>(direction) & static_cast<int>(Direction::kWest) &&
+          position.x == 0) {
+        continue;
+      }
+      available.push_back(direction);
     }
     return available;
   }
