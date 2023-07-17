@@ -35,35 +35,7 @@ class Maze {
   std::array<std::array<int, 16>, 16> GetWall() const { return wall_; }
   Position GetStart() const { return start_; }
   Position GetGoal() const { return goal_; }
-  std::vector<Direction> GetAvailableDirection(Position position) const {
-    std::vector<Direction> available;
-    for (auto direction :
-         {Direction::kNorth, Direction::kNorthEast, Direction::kEast,
-          Direction::kSouthEast, Direction::kSouth, Direction::kSouthWest,
-          Direction::kWest, Direction::kNorthWest}) {
-      // Wall Check
-      if (wall_[position.y][position.x] & static_cast<int>(direction)) continue;
-      // Boundary Check
-      if (static_cast<int>(direction) & static_cast<int>(Direction::kNorth) &&
-          position.y == 0) {
-        continue;
-      }
-      if (static_cast<int>(direction) & static_cast<int>(Direction::kEast) &&
-          position.x == 15) {
-        continue;
-      }
-      if (static_cast<int>(direction) & static_cast<int>(Direction::kSouth) &&
-          position.y == 15) {
-        continue;
-      }
-      if (static_cast<int>(direction) & static_cast<int>(Direction::kWest) &&
-          position.x == 0) {
-        continue;
-      }
-      available.push_back(direction);
-    }
-    return available;
-  }
+  std::vector<Direction> GetAvailableDirection(Position position) const;
 
  private:
   /**

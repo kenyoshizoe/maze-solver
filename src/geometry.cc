@@ -3,6 +3,61 @@
 #include <iostream>
 
 namespace maze_solver {
+std::vector<Direction> Maze::GetAvailableDirection(Position position) const {
+  std::vector<Direction> available;
+  for (auto direction :
+       {Direction::kNorth, Direction::kNorthEast, Direction::kEast,
+        Direction::kSouthEast, Direction::kSouth, Direction::kSouthWest,
+        Direction::kWest, Direction::kNorthWest}) {
+    // Wall Check
+    if (wall_[position.y][position.x] & static_cast<int>(direction)) continue;
+    // Boundary Check
+    if (static_cast<int>(direction) & static_cast<int>(Direction::kNorth) &&
+        position.y == 0) {
+      continue;
+    }
+    if (static_cast<int>(direction) & static_cast<int>(Direction::kEast) &&
+        position.x == 15) {
+      continue;
+    }
+    if (static_cast<int>(direction) & static_cast<int>(Direction::kSouth) &&
+        position.y == 15) {
+      continue;
+    }
+    if (static_cast<int>(direction) & static_cast<int>(Direction::kWest) &&
+        position.x == 0) {
+      continue;
+    }
+    // Diagonal Wall Check
+    if (direction == Direction::kNorthEast &&
+        (wall_[position.y - 1][position.x + 1] &
+             static_cast<int>(Direction::kSouth) ||
+         wall_[position.y - 1][position.x + 1] &
+             static_cast<int>(Direction::kWest)))
+      continue;
+    if (direction == Direction::kSouthEast &&
+        (wall_[position.y + 1][position.x + 1] &
+             static_cast<int>(Direction::kNorth) ||
+         wall_[position.y + 1][position.x + 1] &
+             static_cast<int>(Direction::kWest)))
+      continue;
+    if (direction == Direction::kSouthWest &&
+        (wall_[position.y + 1][position.x - 1] &
+             static_cast<int>(Direction::kNorth) ||
+         wall_[position.y + 1][position.x - 1] &
+             static_cast<int>(Direction::kEast)))
+      continue;
+    if (direction == Direction::kNorthWest &&
+        (wall_[position.y - 1][position.x - 1] &
+             static_cast<int>(Direction::kSouth) ||
+         wall_[position.y - 1][position.x - 1] &
+             static_cast<int>(Direction::kEast)))
+      continue;
+    available.push_back(direction);
+  }
+  return available;
+}
+
 Path::Path(Position point) : position_(point) {
   // initialize visited
   for (int y = 0; y < 16; y++)
@@ -12,19 +67,17 @@ Path::Path(Position point) : position_(point) {
 Path::Path(Position position, std::vector<Direction> directions,
            std::array<std::array<bool, 16>, 16> visited, Direction direction)
     : directions_(directions), visited_(visited) {
-  switch (direction) {
-    case Direction::kNorth:
-      position.y--;
-      break;
-    case Direction::kEast:
-      position.x++;
-      break;
-    case Direction::kWest:
-      position.x--;
-      break;
-    case Direction::kSouth:
-      position.y++;
-      break;
+  if (static_cast<int>(direction) & static_cast<int>(Direction::kNorth)) {
+    position.y--;
+  }
+  if (static_cast<int>(direction) & static_cast<int>(Direction::kEast)) {
+    position.x++;
+  }
+  if (static_cast<int>(direction) & static_cast<int>(Direction::kWest)) {
+    position.x--;
+  }
+  if (static_cast<int>(direction) & static_cast<int>(Direction::kSouth)) {
+    position.y++;
   }
   position_ = position;
   directions_.push_back(direction);
@@ -36,25 +89,8 @@ Path Path::GetNextPath(Direction direction) const {
 std::vector<Path> Path::GetNextPaths(Maze maze) const {
   std::vector<Path> next_paths;
   for (auto direction : maze.GetAvailableDirection(position_)) {
-    Position next_position = position_;
-    switch (direction) {
-      case Direction::kEast:
-        next_position.x++;
-        break;
-      case Direction::kNorth:
-        next_position.y--;
-        break;
-      case Direction::kSouth:
-        next_position.y++;
-        break;
-      case Direction::kWest:
-        next_position.x--;
-        break;
-      default:
-        break;
-    }
-
-    if (visited_[next_position.y][next_position.x]) {
+    Path next_path = GetNextPath(direction);
+    if (visited_[next_path.GetPosition().y][next_path.GetPosition().x]) {
       continue;
     }
     next_paths.push_back(GetNextPath(direction));
