@@ -42,3 +42,14 @@ target_include_directories(dijkstra_test
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
+add_executable(astar_test
+    test/astar_test.cc
+)
+target_link_libraries(astar_test
+    PRIVATE
+    maze_solver
+)
+target_include_directories(astar_test
+    PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
