@@ -1,6 +1,7 @@
 #ifndef MAZE_SOLVER_GEOMETRY_H_
 #define MAZE_SOLVER_GEOMETRY_H_
 
+#include <iostream>
 #include <memory>
 #include <utility>
 #include <vector>
@@ -32,18 +33,36 @@ class Maze {
  public:
   Maze(std::array<std::array<int, 16>, 16> wall, Position start, Position goal)
       : wall_(wall), start_(start), goal_(goal){};
+  /**
+   * @brief 迷路の壁情報を返す
+   * @return std::array<std::array<int, 16>, 16> 
+   */
   std::array<std::array<int, 16>, 16> GetWall() const { return wall_; }
+  /**
+   * @brief スタートの座標を返す
+   * @return Position 
+   */
   Position GetStart() const { return start_; }
+  /**
+   * @brief ゴールの座標を返す
+   * @return Position 
+   */
   Position GetGoal() const { return goal_; }
+  /**
+   * @brief ある座標から進める方向を返す
+   * @param position
+   * @return std::vector<Direction>
+   */
   std::vector<Direction> GetAvailableDirection(Position position) const;
 
  private:
   /**
    * @brief 2次元配列で迷路の壁を表現する。
-   * 1bit: West Wall
-   * 2bit: North Wall
-   * 3bit: South Wall
-   * 4bit: East Wall
+   * @details
+   * 1bit: South Wall
+   * 2bit: East Wall
+   * 3bit: West Wall
+   * 4bit: North Wall
    */
   std::array<std::array<int, 16>, 16> wall_;
   Position start_;
