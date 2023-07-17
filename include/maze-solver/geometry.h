@@ -19,6 +19,8 @@ enum class Direction {
   kNorthWest = 0b1100,
 };
 
+int DirectionToInt(Direction direction);
+
 struct Position {
   int x;
   int y;

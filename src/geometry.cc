@@ -3,6 +3,29 @@
 #include <iostream>
 
 namespace maze_solver {
+int DirectionToInt(Direction direction) {
+  switch (direction) {
+    case Direction::kNorth:
+      return 0;
+    case Direction::kNorthEast:
+      return 1;
+    case Direction::kEast:
+      return 2;
+    case Direction::kSouthEast:
+      return 3;
+    case Direction::kSouth:
+      return 4;
+    case Direction::kSouthWest:
+      return 5;
+    case Direction::kWest:
+      return 6;
+    case Direction::kNorthWest:
+      return 7;
+    default:
+      return -1;
+  }
+}
+
 std::vector<Direction> Maze::GetAvailableDirection(Position position) const {
   std::vector<Direction> available;
   for (auto direction :
