@@ -31,3 +31,14 @@ target_include_directories(dfs_test
     PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
+add_executable(dijkstra_test
+    test/dijkstra_test.cc
+)
+target_link_libraries(dijkstra_test
+    PRIVATE
+    maze_solver
+)
+target_include_directories(dijkstra_test
+    PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
