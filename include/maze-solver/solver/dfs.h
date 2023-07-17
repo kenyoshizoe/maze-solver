@@ -3,7 +3,6 @@
 
 #include "maze-solver/geometry.h"
 #include "maze-solver/solver/solver_base.h"
-#include "maze-solver/visualizer/print.h"
 
 namespace maze_solver {
 class DFS : public SolverBase {
