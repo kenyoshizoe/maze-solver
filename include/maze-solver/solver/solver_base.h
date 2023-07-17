@@ -33,9 +33,11 @@ class SolverBase {
         pre_direction = direction;
         continue;
       }
-      cost +=
+      int rotate_cost =
           std::abs(DirectionToInt(pre_direction) - DirectionToInt(direction)) %
           4;
+      int acc_cost = rotate_cost == 0 ? 0 : 3;
+      cost += 1 + rotate_cost + acc_cost;
       pre_direction = direction;
     }
     return cost;
