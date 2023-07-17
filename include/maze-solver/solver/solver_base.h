@@ -50,7 +50,7 @@ class SolverBase {
               << std::chrono::duration_cast<std::chrono::milliseconds>(
                      std::chrono::system_clock::now() - start_time)
                      .count()
-              << "[ms], max_container_size:" << 10 << std::endl;
+              << "[ms], max_container_size:" << max_container_size << std::endl;
   }
   bool print_solving_process_ = false;
   bool print_solving_perfomance_ = false;
