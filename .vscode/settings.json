@@ -1,0 +1,10 @@
+{
+    "markdown.marp.themes": [
+        "https://raw.githubusercontent.com/kaisugi/marp-theme-academic/main/themes/academic.css"
+    ],
+    "files.associations": {
+        "*.inc": "cpp",
+        "chrono": "cpp",
+        "thread": "cpp"
+    }
+}
